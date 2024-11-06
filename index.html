@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCF Quiz</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+</head>
+<body>
+    <div class="container" id="main-page">
+        <img src="logo.png" alt="France Education International Logo" class="logo">
+        <h1>Bienvenue au Test de Connaissance du Français TCF</h1>
+        <p>Lisez bien les consignes avant de cliquer sur Commencer</p>
+        
+        <div class="quiz-intro">
+            <h2>Quizz TCF</h2>
+            <p>
+                Les boutons de réponse deviennent désactivés après la sélection.<br/>
+                Après avoir sélectionné une réponse, un bouton "Suivant" apparaît.<br/>
+                En cliquant sur "Suivant", la question suivante s'affiche.<br/>
+                Si toutes les questions sont terminées, le score final s'affiche.<br/>
+            </p>
+            <button id="start-quiz">Commencer le Quizz</button>
+        </div>
+    </div>
+
+    <div class="container quiz-container hidden" id="quiz-page">
+        <div class="quiz-header">
+            <span id="question-number">01 / 20</span>
+            <span id="timer"> <i class="fa-solid fa-hourglass-end"></i> 20</span>
+        </div>
+        <h2>Quel est la bonne réponse .................................... ?</h2>
+        <div class="answers">
+            <button class="answer">Réponse 1</button>
+            <button class="answer">Réponse 2</button>
+            <button class="answer">Réponse 3</button>
+            <button class="answer">Réponse 4</button>
+        </div>
+        <button id="next-question" class="hidden">Question Suivante</button>
+        <span id="score" class="score">Score: 0</span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
