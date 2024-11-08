@@ -127,9 +127,12 @@ const crossIcon = '<div class="cross icon"> <i class="fa-regular fa-circle-xmark
 
 // function to start quiz 
 function startQuiz() {
+    score = 0;
+    questionIndex = 0;
     correctAnswers = [];
     shuffleQuestions();
     mainPage.classList.add("hidden");
+    quizResult.classList.add("hidden");
     quizPage.classList.remove("hidden");
     showQuestion();
 }
@@ -159,7 +162,7 @@ function loadScore() {
     const savedScore = localStorage.getItem("quizScore");
     if (savedScore !== null) {
         lastscoreDisplay.innerText = `Last Score: ${savedScore} / 10`;
-        document.getElementById('main-page').appendChild(LastscoreDisplay);
+        document.getElementById('main-page').appendChild(lastscoreDisplay);
     }
 }
 
@@ -207,7 +210,7 @@ function showQuestion() {
             stopTimer() // stop timer after selecting answer
         }
     });
-
+    scoreDisplay.textContent = `Score : ${score}`; // update score
     startTimer();
 }
 
@@ -230,7 +233,6 @@ function checkAnswer(selected) {
             correctAnswer.insertAdjacentHTML("beforeend", checkIcon);
         }, 1000);
     }
-    scoreDisplay.textContent = `Score : ${score}`; // update score
     answerButtons.forEach(btn => btn.disabled = true); // disable buttons
     nextButton.classList.remove("hidden"); // show next question button
 }
@@ -256,13 +258,7 @@ function markCorrectAnswers() {
     });
 }
 
-// Function to restart the quiz
-function restartQuiz() {
-    score = 0;
-    questionIndex = 0;
-    quizResult.classList.add("hidden");
-    quizPage.classList.remove("hidden");
-}
+
 
 // Function to show final score and level
 function endQuiz() {
@@ -277,7 +273,7 @@ function endQuiz() {
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", nextQuestion);
-restartButton.addEventListener("click", restartQuiz);
+restartButton.addEventListener("click", startQuiz);
 returnMainButton.addEventListener("click", () => {
     quizResult.classList.add("hidden");
     mainPage.classList.remove("hidden");
