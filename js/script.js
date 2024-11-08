@@ -90,7 +90,7 @@ let questions = [
         correct: 1
     },
     {
-        question: "On ne regardera pas la 6e chaîne ce soir ! Je déteste les émissions de télé-réalité !…… je veux bien voir le film documentaire sur la 2e.",
+        question: "Si ma sœur ne…… pas systématiquement à la légère, elle n’aurait pas tant de défis à relever.",
         answers: ["s'engage", "s'engageait", "s'est engagée", "s'était engagée"],
         correct: 1
     },
@@ -99,22 +99,6 @@ let questions = [
         answers: ["accaparement", "admiration", "extase", "inspiration"],
         correct: 1
     },
-    {
-        question: "Quelle catastrophe ! En entendant la nouvelle j’ai été…",
-        answers: ["enterré", "harassé", "ratissé", "terrassé"],
-        correct: 3
-    },
-    {
-        question: "Quelle catastrophe ! En entendant la nouvelle j’ai été…",
-        answers: ["enterré", "harassé", "ratissé", "terrassé"],
-        correct: 3
-    },
-    {
-        question: "Quelle catastrophe ! En entendant la nouvelle j’ai été…",
-        answers: ["enterré", "harassé", "ratissé", "terrassé"],
-        correct: 3
-    },
-
 ];
 
 const startButton = document.getElementById("start-quiz");
@@ -126,19 +110,58 @@ const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question-text");
 const answerButtons = document.querySelectorAll(".answer");
 const scoreDisplay = document.getElementById("score");
+const quizScoreDisplay = document.getElementById("quiz-score")
+const levelDisplay = document.querySelector("#level");
+const restartButton = document.querySelector(".quiz-restart");
+const returnMainButton = document.querySelector(".quiz-return-main");
 let score = 0;
 let questionIndex = 0;
 let timer;
 let timeLeft = 20;
+let correctAnswers = [];
+
 const checkIcon = '<div class="tick icon"> <i class="fa-regular fa-circle-check"></i></div>';
 const crossIcon = '<div class="cross icon"> <i class="fa-regular fa-circle-xmark"></i></div>';
 
 
 // function to start quiz 
 function startQuiz() {
+    correctAnswers = [];
+    shuffleQuestions();
     mainPage.classList.add("hidden");
     quizPage.classList.remove("hidden");
     showQuestion();
+}
+
+// Function to shuffle the questions
+function shuffleQuestions() {
+    questions = questions.sort(() => Math.random() - 0.5);
+}
+
+// Function to get the level based on the score
+function getLevel(score) {
+    if (score <= 2) return "A1";
+    else if (score <= 4) return "A2";
+    else if (score <= 6) return "B1";
+    else if (score <= 8) return "B2";
+    else if (score === 9) return "C1";
+    else return "C2";
+}
+
+// Function to save the score in local storage
+function saveScore(score) {
+    localStorage.setItem("quizScore", score);
+}
+
+// Function to load the saved score from local storage
+function loadScore() {
+    const savedScore = localStorage.getItem("quizScore");
+    if (savedScore !== null) {
+        const scoreDisplay = document.createElement('div');
+        scoreDisplay.id = 'last-score-display';
+        scoreDisplay.innerText = `Last Score: ${savedScore} / 10`;
+        document.getElementById('main-page').appendChild(scoreDisplay);
+    }
 }
 
 // function to launch timer 
@@ -195,6 +218,7 @@ function checkAnswer(selected) {
     const selectedBtn = answerButtons[selected]; // selected button DOM element
     const correctAnswer = answerButtons[correct]; // correct button answer DOM
     if (selected === correct) {
+        correctAnswers.push(questionIndex+1);
         selectedBtn.classList.add("correct");
         selectedBtn.insertAdjacentHTML("beforeend", checkIcon);
         score++;
@@ -223,8 +247,41 @@ function nextQuestion() {
     }
 }
 
+// Function to update question-item styles if answered correctly
+function markCorrectAnswers() {
+    const questionItems = document.querySelectorAll('.score-grid .question-item');
+    questionItems.forEach((item, index) => {
+        if (correctAnswers.includes(index + 1)) {
+            item.classList.add('correct-answer');
+        }
+    });
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    score = 0;
+    questionIndex = 0;
+    quizResult.classList.add("hidden");
+    quizPage.classList.remove("hidden");
+}
+
+// Function to show final score and level
 function endQuiz() {
+    quizPage.classList.add("hidden");
+    quizResult.classList.remove("hidden");
+    quizScoreDisplay.textContent = score;
+    const level = getLevel(score);
+    levelDisplay.textContent = `${level}`;
+    markCorrectAnswers(correctAnswers);
+    saveScore(score);
 }
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", nextQuestion);
+restartButton.addEventListener("click", restartQuiz);
+returnMainButton.addEventListener("click", () => {
+    quizResult.classList.add("hidden");
+    mainPage.classList.remove("hidden");
+    loadScore();
+});
+document.addEventListener("DOMContentLoaded",loadScore());

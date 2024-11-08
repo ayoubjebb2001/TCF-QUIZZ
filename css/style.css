@@ -78,6 +78,17 @@ button:disabled {
     cursor: not-allowed;
 }
 
+#last-score-display {
+    font-size: 1.2em;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin: 15px 0;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
 /* Answer Buttons */
 .answers button {
     display: block;
@@ -227,6 +238,11 @@ span#quiz-score {
     text-align: center;
     border: 1px solid rgb(241, 80, 99);
     cursor: pointer;
+}
+
+.score-grid .question-item.correct-answer {
+    border: none;
+    color: #0FAE4E;
 }
 
 

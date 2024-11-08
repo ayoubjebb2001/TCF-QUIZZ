@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container hidden" id="main-page">
+    <div class="container" id="main-page">
         <img src="logo.png" alt="France Education International Logo" class="logo">
         <h1>Bienvenue au Test de Connaissance du Français TCF</h1>
         <p>Lisez bien les consignes avant de cliquer sur Commencer</p>
@@ -26,6 +26,7 @@
             </p>
             <button id="start-quiz">Commencer le Quizz</button>
         </div>
+        
     </div>
 
     <div class="container quiz-container hidden" id="quiz-page">
@@ -43,13 +44,13 @@
         <button id="next-question" class="hidden">Question Suivante</button>
         <span id="score" class="score">Score: 0</span>
     </div>
-    <div class="container quiz-result " id="quiz-result">
+    <div class="container quiz-result hidden " id="quiz-result">
         <h1>Vos résultats de test</h1>
         <div class="quiz-score">
             <div class="score-general">
                 <span id="quiz-score">7</span>/10
             </div>
-            <p id="level">Votre Niveau est : B2</p>
+            <p>Votre Niveau est : <span id="level"></span></p>
         </div>
         <div class="quiz-recap" id="quiz-recap">
             <h2>Récapitulatif du Test</h2>
