@@ -127,8 +127,11 @@ const answerButtons = document.querySelectorAll(".answer");
 const scoreDisplay = document.getElementById("score");
 let score = 0;
 let questionIndex = 0;
-const checkIcon = '<div class="icon tick"> <i class="fa-regular fa-circle-check"></i></div>'; 
-const crossIcon = '<div class="cross tick"> <i class="fa-regular fa-circle-xmark"></i></div>';
+let timer;
+let timeLeft = 20;
+const checkIcon = '<div class="tick icon"> <i class="fa-regular fa-circle-check"></i></div>';
+const crossIcon = '<div class="cross icon"> <i class="fa-regular fa-circle-xmark"></i></div>';
+
 
 // function to start quiz 
 function startQuiz() {
@@ -137,44 +140,78 @@ function startQuiz() {
     showQuestion();
 }
 
+// function to launch timer 
+function startTimer() {
+    timeLeft = 20; // reset timer
+    document.getElementById("timer").lastChild.textContent = timeLeft;
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").lastChild.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            stopTimer();
+            showCorrectAnswer();
+        }
+    }, 1000);
+}
+
+//function to stop timer 
+function stopTimer() {
+    clearInterval(timer);
+}
+// function to show correct answer after timer expire
+function showCorrectAnswer() {
+    const correct = questions[questionIndex].correct;
+    const correctAnswer = answerButtons[correct];
+    correctAnswer.classList.add("correct");
+    correctAnswer.insertAdjacentHTML("beforeend", checkIcon);
+    answerButtons.forEach(btn => btn.disabled = true); // disable buttons
+    nextButton.classList.toggle("hidden")
+}
+
 // function to show question
 function showQuestion() {
     const currentQuestion = questions[questionIndex];
     questionText.textContent = currentQuestion.question;
-    questionNumber.textContent = `${questionIndex+1}/10`;
+    questionNumber.textContent = `${questionIndex + 1}/10`;
     answerButtons.forEach((btn, index) => {
         btn.textContent = currentQuestion.answers[index];
         // reset button states
         btn.disabled = false;
-        btn.classList.remove("correct");
-        btn.classList.remove("incorrect");
-
+        btn.classList.remove("correct", "incorrect");
         // select answer event listener
-        btn.onclick = () => selectAnswer(index);
+        btn.onclick = () => {
+            checkAnswer(index); // check answer
+            stopTimer() // stop timer after selecting answer
+        }
     });
+
+    startTimer();
 }
 
-function selectAnswer(selected) {
-    const correct = questions[questionIndex].correct;
-    const selectedBtn = answerButtons[selected]
-    const correctAnswer = answerButtons[correct];
+// function for checking selected answer (correct or incorrect)
+function checkAnswer(selected) {
+    const correct = questions[questionIndex].correct; // index of correct answer in array
+    const selectedBtn = answerButtons[selected]; // selected button DOM element
+    const correctAnswer = answerButtons[correct]; // correct button answer DOM
     if (selected === correct) {
         selectedBtn.classList.add("correct");
-        selectedBtn.insertAdjacentHTML("beforeend",checkIcon);
+        selectedBtn.insertAdjacentHTML("beforeend", checkIcon);
         score++;
-    }else{
+    } else {
         selectedBtn.classList.add("incorrect");
-        selectedBtn.insertAdjacentHTML("beforeend",crossIcon);
+        selectedBtn.insertAdjacentHTML("beforeend", crossIcon);
+        // Mark correct answer if the selected is wrong
         setTimeout(() => {
             correctAnswer.classList.add("correct");
-            correctAnswer.insertAdjacentHTML("beforeend",checkIcon);
+            correctAnswer.insertAdjacentHTML("beforeend", checkIcon);
         }, 1000);
     }
-    scoreDisplay.textContent = `Score : ${score}`;
-    answerButtons.forEach(btn => btn.disabled = true);
-    nextButton.classList.remove("hidden");
+    scoreDisplay.textContent = `Score : ${score}`; // update score
+    answerButtons.forEach(btn => btn.disabled = true); // disable buttons
+    nextButton.classList.remove("hidden"); // show next question button
 }
 
+// function for next question event listener
 function nextQuestion() {
     questionIndex++;
     if (questionIndex < 10) {
