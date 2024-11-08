@@ -110,6 +110,7 @@ const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question-text");
 const answerButtons = document.querySelectorAll(".answer");
 const scoreDisplay = document.getElementById("score");
+const lastscoreDisplay = document.getElementById("last-score-display");
 const quizScoreDisplay = document.getElementById("quiz-score")
 const levelDisplay = document.querySelector("#level");
 const restartButton = document.querySelector(".quiz-restart");
@@ -157,10 +158,8 @@ function saveScore(score) {
 function loadScore() {
     const savedScore = localStorage.getItem("quizScore");
     if (savedScore !== null) {
-        const scoreDisplay = document.createElement('div');
-        scoreDisplay.id = 'last-score-display';
-        scoreDisplay.innerText = `Last Score: ${savedScore} / 10`;
-        document.getElementById('main-page').appendChild(scoreDisplay);
+        lastscoreDisplay.innerText = `Last Score: ${savedScore} / 10`;
+        document.getElementById('main-page').appendChild(LastscoreDisplay);
     }
 }
 
