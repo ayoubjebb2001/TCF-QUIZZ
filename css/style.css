@@ -94,6 +94,14 @@ button:disabled {
 .answers button:hover {
     border-color: #007bff;
 }
+.answers button.correct {
+    background: #e2f2e6;
+    border-color: #599c6c;
+}
+.answers button.incorrect {
+    background: #f8d7da;
+    border-color: #da1039;
+}
 
 /* Hidden Class */
 .hidden {
