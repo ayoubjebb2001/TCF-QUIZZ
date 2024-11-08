@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,20 @@
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="css/fontawesome.min.css">
 </head>
+
 <body>
-    <div class="container" id="main-page">
+    <div class="container hidden" id="main-page">
         <img src="logo.png" alt="France Education International Logo" class="logo">
         <h1>Bienvenue au Test de Connaissance du Français TCF</h1>
         <p>Lisez bien les consignes avant de cliquer sur Commencer</p>
-        
+
         <div class="quiz-intro">
             <h2>Quizz TCF</h2>
             <p>
-                Les boutons de réponse deviennent désactivés après la sélection.<br/>
-                Après avoir sélectionné une réponse, un bouton "Suivant" apparaît.<br/>
-                En cliquant sur "Suivant", la question suivante s'affiche.<br/>
-                Si toutes les questions sont terminées, le score final s'affiche.<br/>
+                Les boutons de réponse deviennent désactivés après la sélection.<br />
+                Après avoir sélectionné une réponse, un bouton "Suivant" apparaît.<br />
+                En cliquant sur "Suivant", la question suivante s'affiche.<br />
+                Si toutes les questions sont terminées, le score final s'affiche.<br />
             </p>
             <button id="start-quiz">Commencer le Quizz</button>
         </div>
@@ -41,7 +43,37 @@
         <button id="next-question" class="hidden">Question Suivante</button>
         <span id="score" class="score">Score: 0</span>
     </div>
+    <div class="container quiz-result " id="quiz-result">
+        <h1>Vos résultats de test</h1>
+        <div class="quiz-score">
+            <div class="score-general">
+                <span id="quiz-score">7</span>/10
+            </div>
+            <p id="level">Votre Niveau est : B2</p>
+        </div>
+        <div class="quiz-recap" id="quiz-recap">
+            <h2>Récapitulatif du Test</h2>
+            <div class="score-grid">
+                <div class="question-item">1</div>
+                <div class="question-item">2</div>
+                <div class="question-item">3</div>
+                <div class="question-item">4</div>
+                <div class="question-item">5</div>
+                <div class="question-item">6</div>
+                <div class="question-item">7</div>
+                <div class="question-item">8</div>
+                <div class="question-item">9</div>
+                <div class="question-item">10</div>
+            </div>
+        </div>
+
+        <div class="more-actions">
+            <button class="quiz-restart">Réessayer</button>
+            <button class="quiz-return-main">Revenir à l'accueil</button>
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
+
 </html>

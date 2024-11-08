@@ -120,6 +120,7 @@ let questions = [
 const startButton = document.getElementById("start-quiz");
 const quizPage = document.getElementById("quiz-page");
 const mainPage = document.getElementById("main-page");
+const quizResult = document.getElementById("quiz-result");
 const nextButton = document.getElementById("next-question");
 const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question-text");
@@ -223,7 +224,6 @@ function nextQuestion() {
 }
 
 function endQuiz() {
-    quizPage.innerHTML = `<h2>Votre score est de ${score} sur ${questions.length}</h2>`;
 }
 
 startButton.addEventListener("click", startQuiz);
